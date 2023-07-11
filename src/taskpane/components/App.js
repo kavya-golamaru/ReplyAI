@@ -5,13 +5,14 @@ import Header from "./Header";
 import HeroList from "./HeroList";
 import Progress from "./Progress";
 
-/* global require */
+/* global Office require */
 
 export default class App extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
       listItems: [],
+      body: "Original state",
     };
   }
 
@@ -35,9 +36,16 @@ export default class App extends React.Component {
   }
 
   click = async () => {
-    /**
-     * Insert your Outlook code here
-     */
+    this.setState({ body: `Email subject: ${Office.context.mailbox.item.subject}` });
+    Office.context.mailbox.item.body.getAsync(
+      "text",
+      { asyncContext: "This is passed to the callback" },
+      function callback(result) {
+        if (result.status === Office.AsyncResultStatus.Succeeded) {
+          this.setState({ body: `Email body: ${result.value}` });
+        }
+      }
+    );
   };
 
   render() {
@@ -64,6 +72,7 @@ export default class App extends React.Component {
             Run
           </DefaultButton>
         </HeroList>
+        <div>{this.state.body}</div>
       </div>
     );
   }
