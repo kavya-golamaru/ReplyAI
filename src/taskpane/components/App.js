@@ -37,15 +37,13 @@ export default class App extends React.Component {
 
   click = async () => {
     this.setState({ body: `Email subject: ${Office.context.mailbox.item.subject}` });
-    Office.context.mailbox.item.body.getAsync(
-      "text",
-      { asyncContext: "This is passed to the callback" },
-      function callback(result) {
-        if (result.status === Office.AsyncResultStatus.Succeeded) {
-          this.setState({ body: `Email body: ${result.value}` });
-        }
+
+    Office.context.mailbox.item.body.getAsync(function callback(result) {
+      this.setState({ body: `Callback ran` });
+      if (result.status === Office.AsyncResultStatus.Succeeded) {
+        this.setState({ body: `Email body: ${result.value}` });
       }
-    );
+    });
   };
 
   render() {
