@@ -14,22 +14,6 @@ Office.onReady(() => {
  * @param event {Office.AddinCommands.Event}
  */
 function action(event) {
-  Office.context.mailbox.item.body.getAsync("text", function callback(result) {
-    if (result.status === Office.AsyncResultStatus.Succeeded) {
-      const message = {
-        type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
-        message: result.value,
-        icon: "Icon.80x80",
-        persistent: true,
-      };
-
-      // Show a notification message
-      Office.context.mailbox.item.notificationMessages.replaceAsync("action", message);
-    }
-    // Be sure to indicate when the add-in command function is complete
-    event.completed();
-  });
-  /*
   const message = {
     type: Office.MailboxEnums.ItemNotificationMessageType.InformationalMessage,
     message: "Performed action.",
@@ -42,7 +26,6 @@ function action(event) {
 
   // Be sure to indicate when the add-in command function is complete
   event.completed();
-   */
 }
 
 function getGlobal() {
