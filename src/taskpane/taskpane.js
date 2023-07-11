@@ -9,17 +9,24 @@ Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
-    document.getElementById("run").onclick = run;
+    document.getElementById("subject-button").onclick = setSubjectText;
+    document.getElementById("body-button").onclick = setBodyText;
   }
 });
 
-export async function run() {
+export async function setSubjectText() {
+  // Get a reference to the current message
+  const subject = Office.context.mailbox.item.subject;
+  document.getElementById("subject-text").innerHTML = "<b>Subject:</b> <br/>" + subject;
+}
+
+export async function setBodyText() {
   // Get a reference to the current message
   const item = Office.context.mailbox.item;
 
   item.body.getAsync("text", function (result) {
     if (result.status === Office.AsyncResultStatus.Succeeded) {
-      document.getElementById("item-subject").innerHTML = "<b>Body:</b> <br/>" + result.value;
+      document.getElementById("body-text").innerHTML = "<b>Body:</b> <br/>" + result.value;
     }
   });
 }
