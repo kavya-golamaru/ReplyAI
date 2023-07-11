@@ -32,7 +32,7 @@ export async function setBodyText() {
 }
 
 export async function setFetchText() {
-  const response = await fetch("https://cat-fact.herokuapp.com/facts/random");
+  const response = await fetch("https://animechan.xyz/api/random");
   const json = await response.json();
   const jsonString = JSON.stringify(json, null, 2);
   document.getElementById("fetch-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
