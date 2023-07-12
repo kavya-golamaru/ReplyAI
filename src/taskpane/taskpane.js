@@ -11,14 +11,7 @@ provideFluentDesignSystem().register(allComponents);
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
-    document.getElementById("prompt").style.display = "flex";
     document.getElementById("app-body").style.display = "flex";
-    document.getElementById("subject-button").onclick = setSubjectText;
-    document.getElementById("body-button").onclick = setBodyText;
-    document.getElementById("fetch-button").onclick = setFetchText;
-    document.getElementById("btn1").onclick = userInput;
-    document.getElementById("show-prompt-button").onclick = buildPrompt;
-    document.getElementById("openai-button").onclick = setOpenAiText;
     document.getElementById("compose-copy-paste-button").onclick = setBodyInCompose;
     document.getElementById("open-reply-button").onclick = openReplyToCurrentEmail;
     document.getElementById("full-functionality-button").onclick = replyAIMain;
@@ -29,7 +22,7 @@ export async function replyAIMain() {
   document.getElementById("response-text").innerHTML = "<fluent-progress-ring></fluent-progress-ring>";
   const userInput = document.getElementById("user-input").value;
   const apiPrompt = await buildPrompt(userInput);
-  document.getElementById("test-text").innerHTML = apiPrompt;
+  // document.getElementById("test-text").innerHTML = apiPrompt;
   setOpenAiText(apiPrompt);
 }
 
@@ -49,26 +42,6 @@ export async function getSubjectText() {
       });
     });
   }
-}
-
-export async function setSubjectText() {
-  if (Office.context.mailbox.item.displayReplyForm != undefined) {
-    // read mode
-    write(Office.context.mailbox.item.subject);
-  } else {
-    // compose mode
-    Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
-      if (asyncResult.status == Office.AsyncResultStatus.Failed) {
-        write(asyncResult.error.message);
-      } else {
-        write(asyncResult.value);
-      }
-    });
-  }
-}
-
-function write(message) {
-  document.getElementById("subject-text").innerText += message;
 }
 
 export async function getBodyText() {
@@ -92,13 +65,6 @@ export async function setBodyText() {
       document.getElementById("body-text").innerHTML = "<b>Body:</b> <br/>" + result.value;
     }
   });
-}
-
-export async function setFetchText() {
-  const response = await fetch("https://animechan.xyz/api/random");
-  const json = await response.json();
-  const jsonString = JSON.stringify(json, null, 2);
-  document.getElementById("fetch-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
 }
 
 export async function userInput() {
@@ -132,7 +98,7 @@ export async function buildPrompt(userInput) {
   );
 
   const result = stringBuilder.join("");
-  document.getElementById("prompt-text").innerHTML = "<b>Prompt:</b> <br/>" + result;
+  // document.getElementById("prompt-text").innerHTML = "<b>Prompt:</b> <br/>" + result;
   return result;
 }
 
@@ -154,10 +120,10 @@ export async function setOpenAiText(apiPrompt) {
     },
     body: JSON.stringify(body),
   });
-  document.getElementById("openai-status-text").innerHTML = "<b>Status:</b> <br/>" + response.status;
+  // document.getElementById("openai-status-text").innerHTML = "<b>Status:</b> <br/>" + response.status;
   const json = await response.json();
-  const jsonString = JSON.stringify(json, null, 2);
-  document.getElementById("openai-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
+  // const jsonString = JSON.stringify(json, null, 2);
+  // document.getElementById("openai-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
 
   document.getElementById("response-text").innerHTML = "<b>Response:</b> <br/>" + json.choices[0].text;
   return json.choices[0].text;
