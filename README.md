@@ -10,3 +10,9 @@ const env = {
 };
 export default env;
 ```
+
+## Troubleshooting
+- [ ] Run `npm install` to install any new dependencies
+- [ ] Run `npm stop` and `npm start` to restart dev server
+- [ ] Remove and install addin again
+- [ ] Restart Outlook
