@@ -64,13 +64,13 @@ export async function userInput() {
   const txt1 = document.getElementById("tbinput");
   const out1 = document.getElementById("output1");
   out1.innerHTML = txt1.value;
-  return out1;
+  return txt1.value;
 }
 export async function buildPrompt() {
   const stringBuilder = [];
   stringBuilder.push("Email Subject: " + getSubjectText() + " ");
   stringBuilder.push("Email Body: " + (await getBodyText()) + " ");
-  stringBuilder.push("Response Instructions: " + document.getElementById("output1").textContent);
+  stringBuilder.push("Response Instructions: " + (await userInput()));
   stringBuilder.push(
     `I need assistance in crafting a response to this email. Please help me by providing a coherent 
     and formal reply based on the given subject line and email body. Use the information provided in 
