@@ -18,16 +18,46 @@ Office.onReady((info) => {
     document.getElementById("fetch-button").onclick = setFetchText;
     document.getElementById("show-prompt-button").onclick = buildPrompt;
     document.getElementById("openai-button").onclick = setOpenAiText;
+    document.getElementById("compose-copy-paste-button").onclick = setBodyInCompose;
   }
 });
 
-export function getSubjectText() {
-  return Office.context.mailbox.item.subject;
+export async function getSubjectText() {
+  if (Office.context.mailbox.item.displayReplyForm != undefined) {
+    // read mode
+    return Office.context.mailbox.item.subject;
+  } else {
+    // compose mode
+    return new Promise((resolve, reject) => {
+      Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+        if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+          reject(new Error("Failed to retrieve subject text."));
+        } else {
+          resolve(asyncResult.value);
+        }
+      });
+    });
+  }
 }
 
 export async function setSubjectText() {
-  const subject = Office.context.mailbox.item.subject;
-  document.getElementById("subject-text").innerHTML = "<b>Subject:</b> <br/>" + subject;
+  if (Office.context.mailbox.item.displayReplyForm != undefined) {
+    // read mode
+    write(Office.context.mailbox.item.subject);
+  } else {
+    // compose mode
+    Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+      if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+        write(asyncResult.error.message);
+      } else {
+        write(asyncResult.value);
+      }
+    });
+  }
+}
+
+function write(message) {
+  document.getElementById("subject-text").innerText += message;
 }
 
 export async function getBodyText() {
@@ -62,7 +92,7 @@ export async function setFetchText() {
 
 export async function buildPrompt() {
   const stringBuilder = [];
-  stringBuilder.push("Email Subject: " + getSubjectText() + " ");
+  stringBuilder.push("Email Subject: " + (await getSubjectText()) + " ");
   stringBuilder.push("Email Body: " + (await getBodyText()) + " ");
   stringBuilder.push("Response Instructions: IMPLEMENT THIS LATER ");
   stringBuilder.push(
@@ -111,4 +141,10 @@ export async function setOpenAiText() {
   const json = await response.json();
   const jsonString = JSON.stringify(json, null, 2);
   document.getElementById("openai-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
+}
+
+export async function setBodyInCompose() {
+  const testString = "ahhhhhhhhhhhhhhhhhhhhhhh it actually workeddd??!!!";
+  Office.context.mailbox.item.body.prependAsync(testString);
+  document.getElementById("compose-copy-paste-text").innerHTML = "<b>Executed</b>";
 }
