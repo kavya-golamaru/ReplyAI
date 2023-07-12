@@ -82,7 +82,8 @@ export async function buildPrompt() {
 
   const result = stringBuilder.join("");
   document.getElementById("prompt-text").innerHTML = "<b>Prompt:</b> <br/>" + result;
-  
+}
+
 export async function setOpenAiText() {
   const body = {
     prompt: "Write a joke related to programming that is one sentence long.",
