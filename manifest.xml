@@ -5,7 +5,7 @@
   <ProviderName>AKA</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="ReplyAI"/>
-  <Description DefaultValue="A template to get started."/>
+  <Description DefaultValue="An add-in that frees you from the stress of writing emails"/>
   <IconUrl DefaultValue="https://localhost:3000/assets/icon-64.png"/>
   <HighResolutionIconUrl DefaultValue="https://localhost:3000/assets/icon-128.png"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
@@ -77,11 +77,11 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://localhost:3000/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Taskpane"/>
+        <bt:String id="GroupLabel" DefaultValue="ReplyAI Add-in"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Open ReplyAI"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying ReplyAI functionality."/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>
