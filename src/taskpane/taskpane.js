@@ -4,7 +4,7 @@
  */
 /* global document, fetch, Office */
 
-import { env } from "../../config";
+import env from "../../config";
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
