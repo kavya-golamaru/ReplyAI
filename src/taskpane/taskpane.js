@@ -19,6 +19,7 @@ Office.onReady((info) => {
     document.getElementById("show-prompt-button").onclick = buildPrompt;
     document.getElementById("openai-button").onclick = setOpenAiText;
     document.getElementById("compose-copy-paste-button").onclick = setBodyInCompose;
+    document.getElementById("open-reply-button").onclick = openReplyToCurrentEmail;
   }
 });
 
@@ -143,8 +144,14 @@ export async function setOpenAiText() {
   document.getElementById("openai-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
 }
 
+// redundant
 export async function setBodyInCompose() {
   const testString = "ahhhhhhhhhhhhhhhhhhhhhhh it actually workeddd??!!!";
   Office.context.mailbox.item.body.prependAsync(testString);
   document.getElementById("compose-copy-paste-text").innerHTML = "<b>Executed</b>";
+}
+
+export async function openReplyToCurrentEmail() {
+  const testString = "ahhhhhhhhhhhhhhhhhhhhhhh it actually workeddd??!!!";
+  Office.context.mailbox.item.displayReplyForm(testString);
 }
