@@ -26,8 +26,23 @@ export function getSubjectText() {
 }
 
 export async function setSubjectText() {
-  const subject = Office.context.mailbox.item.subject;
-  document.getElementById("subject-text").innerHTML = "<b>Subject:</b> <br/>" + subject;
+  if (Office.context.mailbox.item.displayReplyForm != undefined) {
+    // read mode
+    write(Office.context.mailbox.item.subject);
+  } else {
+    // compose mode
+    Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+      if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+        write(asyncResult.error.message);
+      } else {
+        write(asyncResult.value);
+      }
+    });
+  }
+}
+
+function write(message) {
+  document.getElementById("subject-text").innerText += message;
 }
 
 export async function getBodyText() {
