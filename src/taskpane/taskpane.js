@@ -21,8 +21,22 @@ Office.onReady((info) => {
   }
 });
 
-export function getSubjectText() {
-  return Office.context.mailbox.item.subject;
+export async function getSubjectText() {
+  if (Office.context.mailbox.item.displayReplyForm != undefined) {
+    // read mode
+    return Office.context.mailbox.item.subject;
+  } else {
+    // compose mode
+    return new Promise((resolve, reject) => {
+      Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+        if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+          reject(new Error("Failed to retrieve subject text."));
+        } else {
+          resolve(asyncResult.value);
+        }
+      });
+    });
+  }
 }
 
 export async function setSubjectText() {
@@ -77,7 +91,7 @@ export async function setFetchText() {
 
 export async function buildPrompt() {
   const stringBuilder = [];
-  stringBuilder.push("Email Subject: " + getSubjectText() + " ");
+  stringBuilder.push("Email Subject: " + (await getSubjectText()) + " ");
   stringBuilder.push("Email Body: " + (await getBodyText()) + " ");
   stringBuilder.push("Response Instructions: IMPLEMENT THIS LATER ");
   stringBuilder.push(
