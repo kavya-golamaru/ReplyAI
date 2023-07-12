@@ -9,5 +9,4 @@ const env = {
     "[YOUR API ENDPOINT]",
 };
 export default env;
-\
 ```
