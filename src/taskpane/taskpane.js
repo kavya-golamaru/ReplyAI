@@ -5,6 +5,9 @@
 /* global document, fetch, Office */
 
 import env from "../../config";
+import { provideFluentDesignSystem, fluentProgress } from "@fluentui/web-components";
+
+provideFluentDesignSystem().register(fluentProgress());
 
 Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
@@ -85,6 +88,8 @@ export async function buildPrompt() {
 }
 
 export async function setOpenAiText() {
+  document.getElementById("openai-text").innerHTML = "<fluent-progress-ring></fluent-progress-ring>";
+
   const body = {
     prompt: "Write a joke related to programming that is one sentence long.",
     temperature: 0.69,
