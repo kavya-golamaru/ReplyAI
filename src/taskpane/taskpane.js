@@ -56,17 +56,6 @@ export async function getBodyText() {
   });
 }
 
-export async function setBodyText() {
-  // Get a reference to the current message
-  const item = Office.context.mailbox.item;
-
-  item.body.getAsync("text", function (result) {
-    if (result.status === Office.AsyncResultStatus.Succeeded) {
-      document.getElementById("body-text").innerHTML = "<b>Body:</b> <br/>" + result.value;
-    }
-  });
-}
-
 export async function userInput() {
   const txt1 = document.getElementById("tbinput");
   const out1 = document.getElementById("output1");
