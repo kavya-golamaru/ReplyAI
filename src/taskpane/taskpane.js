@@ -12,20 +12,28 @@ Office.onReady((info) => {
   if (info.host === Office.HostType.Outlook) {
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
-    document.getElementById("compose-copy-paste-button").onclick = setBodyInCompose;
-    document.getElementById("open-reply-button").onclick = openReplyToCurrentEmail;
-    document.getElementById("full-functionality-button").onclick = replyAIMain;
+    document.getElementById("btn1").onclick = userInput;
+    document.getElementById("subject-button").onclick = setSubjectText;
+    document.getElementById("body-button").onclick = setBodyText;
+    document.getElementById("fetch-button").onclick = setFetchText;
+    //document.getElementById("compose-copy-paste-button").onclick = setBodyInCompose;
+    document.getElementById("show-prompt-button").onclick = buildPrompt;
+    document.getElementById("openai-button").onclick = setOpenAiText;
+    document.getElementById("btn2").onclick = openReplyToCurrentEmail;
+    document.getElementById("btn1").onclick = replyAIMain;
   }
 });
 
 export async function replyAIMain() {
   document.getElementById("response-text").innerHTML = "<fluent-progress-ring></fluent-progress-ring>";
-  const userInput = document.getElementById("user-input").value;
+  const userInput = document.getElementById("tbinput1").value;
   const apiPrompt = await buildPrompt(userInput);
   // document.getElementById("test-text").innerHTML = apiPrompt;
   setOpenAiText(apiPrompt);
 }
-
+function write(message) {
+  document.getElementById("subject-text").innerText += message;
+}
 export async function getSubjectText() {
   if (Office.context.mailbox.item.displayReplyForm != undefined) {
     // read mode
@@ -43,7 +51,38 @@ export async function getSubjectText() {
     });
   }
 }
+export async function setSubjectText() {
+  if (Office.context.mailbox.item.displayReplyForm != undefined) {
+    // read mode
+    write(Office.context.mailbox.item.subject);
+  } else {
+    // compose mode
+    Office.context.mailbox.item.subject.getAsync(function (asyncResult) {
+      if (asyncResult.status == Office.AsyncResultStatus.Failed) {
+        write(asyncResult.error.message);
+      } else {
+        write(asyncResult.value);
+      }
+    });
+  }
+}
+export async function setBodyText() {
+  // Get a reference to the current message
+  const item = Office.context.mailbox.item;
 
+  item.body.getAsync("text", function (result) {
+    if (result.status === Office.AsyncResultStatus.Succeeded) {
+      document.getElementById("body-text").innerHTML = "<b>Body:</b> <br/>" + result.value;
+    }
+  });
+}
+
+export async function setFetchText() {
+  const response = await fetch("https://animechan.xyz/api/random");
+  const json = await response.json();
+  const jsonString = JSON.stringify(json, null, 2);
+  document.getElementById("fetch-text").innerHTML = "<b>Response:</b> <br/>" + jsonString;
+}
 export async function getBodyText() {
   return new Promise((resolve, reject) => {
     Office.context.mailbox.item.body.getAsync("text", function (result) {
@@ -57,7 +96,7 @@ export async function getBodyText() {
 }
 
 export async function userInput() {
-  const txt1 = document.getElementById("tbinput");
+  const txt1 = document.getElementById("tbinput1");
   const out1 = document.getElementById("output1");
   out1.innerHTML = txt1.value;
   return txt1.value;
@@ -119,11 +158,11 @@ export async function setOpenAiText(apiPrompt) {
 }
 
 // redundant
-export async function setBodyInCompose() {
+/*export async function setBodyInCompose() {
   const testString = "ahhhhhhhhhhhhhhhhhhhhhhh it actually workeddd??!!!";
   Office.context.mailbox.item.body.prependAsync(testString);
   document.getElementById("compose-copy-paste-text").innerHTML = "<b>Executed</b>";
-}
+}*/
 
 export async function openReplyToCurrentEmail() {
   const testString = "ahhhhhhhhhhhhhhhhhhhhhhh it actually workeddd??!!!";

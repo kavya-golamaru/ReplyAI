@@ -15,7 +15,7 @@
 
     <!-- fluentui web component -->
     <script type="module" src="https://unpkg.com/@fluentui/web-components"></script>
-    
+
     <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->
     <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
 
@@ -24,48 +24,72 @@
 </head>
 
 <body class="ms-font-m ms-welcome ms-Fabric">
-    <header class="ms-welcome__header ms-bgColor-neutralLighter">
-        <h1 class="ms-font-xl">ReplyAI</h1>
-    </header>
-    <section id="sideload-msg" class="ms-welcome__main">
-        <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
-    </section>
-    <main id="app-body" class="ms-welcome__main" style="display: none;">
+<header class="ms-welcome__header ms-bgColor-neutralLighter">
+    <h1 class="ms-font-xl">ReplyAI</h1>
+</header>
+<section id="sideload-msg" class="ms-welcome__main">
+    <h2 class="ms-font-xl">Please <a target="_blank" href="https://learn.microsoft.com/office/dev/add-ins/testing/test-debug-office-add-ins#sideload-an-office-add-in-for-testing">sideload</a> your add-in to see app body.</h2>
+</section>
+<main id="app-body" class="ms-welcome__main" style="display: none;">
+    <div role="button" id="subject-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
+        <span class="ms-Button-label">Display email subject</span>
+    </div>
+    <p><label id="subject-text"></label></p>
 
-        <!-- <div role="button" id="show-prompt-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
-            <span class="ms-Button-label">Show current OpenAI API prompt</span>
+    <p><label id="body-subject"></label></p>
+    <div role="button" id="body-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
+        <span class="ms-Button-label">Display email body</span>
+    </div>
+    <p><label id="body-text"></label></p>
+    <div id="flex-container1" class= "flexbox">
+        <div class="box1">
+            <fluent-text-area class="textarea1" appearance="outline" id="tbinput1" placeholder="Please reply to this email asking to reschedule this meeting to Wednesday at 2:00pm.">Enter outline for message: </fluent-text-area>
         </div>
-        <p><label id="prompt-text"></label></p> -->
-
-        <!-- <div role="button" id="openai-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
-            <span class="ms-Button-label">OpenAI response </span>
+        <div class="box2">
+            <input class="genbtn" type="button" id="btn1" value="Generate message">
         </div>
-        <p><label id="openai-status-text"></label></p>
-        <p><label id="openai-text"></label></p> -->
-
-        <div role="button" id="compose-copy-paste-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
-            <span class="ms-Button-label">Inject pre-written email (redundant with reply to current email)</span>
+        <div class="box3">
+            <p class="output" id="output1"></p>
         </div>
-        <p><label id="compose-copy-paste-text"></label></p>
+    </div>
 
-        <div role="button" id="open-reply-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
-            <span class="ms-Button-label">reply to current email</span>
+    <div role="button" id="fetch-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
+        <span class="ms-Button-label">Fetch random anime quote from API</span>
+    </div>
+    <p><label id="fetch-text"></label></p>
+
+    <div role="button" id="show-prompt-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
+        <span class="ms-Button-label">Show current OpenAI API prompt</span>
+    </div>
+    <p><label id="prompt-text"></label></p>
+
+    <div role="button" id="openai-button" class="ms-welcome__action ms-Button ms-Button--hero ms-font-l">
+        <span class="ms-Button-label">Generate programming joke using OpenAI</span>
+    </div>
+    <p><label id="openai-status-text"></label></p>
+    <p><label id="openai-text"></label></p>
+
+<!--    <div role="button" id="compose-copy-paste-button" class="ms-welcome__action ms-Button ms-Button&#45;&#45;hero ms-font-l">
+        <span class="ms-Button-label">Inject pre-written email (redundant with reply to current email)</span>
+    </div>
+    <p><label id="compose-copy-paste-text"></label></p>-->
+
+    <p><label id="open-reply-text"></label></p>
+    <div id="flex-container2" class= "flexbox">
+        <div class="rectangle">
         </div>
-        <p><label id="open-reply-text"></label></p>
-
-        <article id="prompt" class = "regular">
-            <fluent-text-area appearance="outline" id="user-input" placeholder="Enter Message">ReplyAI - real functionality </fluent-text-area>
-
-            <input type="button" id="full-functionality-button" class="genbtn" value="Generate">
-
-            <p class="output" id="full-funcitonality-text"></p>
+        <div class="box2">
+            <input class="reply" type="button" id="btn2" value="Send as reply">
+        </div>
+        <div class="box3">
             <p><label id="test-text"></label></p>
-            <p><label id="response-text"></label></p>
+        </div>
+    </div>
 
+    <p class="output" id="full-functionality-text"></p>
+    <p><label id="response-text"></label></p>
 
-        </article>
-
-    </main>
+</main>
 </body>
 
 </html>
