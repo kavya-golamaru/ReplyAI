@@ -80,7 +80,18 @@ b {
     font-weight: bold;
 }
 
+.genbtn {
+    background-color: mediumblue;
+    width: 150px;
+    font-size: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 3px lightsteelblue;
+    color: white;
+    text-align: center;
+    display: inline-block;
+}
+
 label {
     white-space: pre-wrap;
-  }
-  
+}
