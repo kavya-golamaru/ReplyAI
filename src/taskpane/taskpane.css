@@ -91,3 +91,7 @@ b {
     text-align: center;
     display: inline-block;
 }
+
+label {
+    white-space: pre-wrap;
+}
